@@ -25,7 +25,7 @@ const ListaRestaurantes = () => {
     axios.get<IPaginacao<IRestaurante>>(proximaPagina)
     .then(resposta => {
       console.log(resposta)
-      setRestaurantes(...restaurantes, ...resposta.data.results)
+      setRestaurantes([...restaurantes, ...resposta.data.results])
       setProximaPagina(resposta.data.next)
     }).catch(erro => {
       console.log(erro)
