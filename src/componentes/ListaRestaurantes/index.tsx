@@ -21,11 +21,22 @@ const ListaRestaurantes = () => {
     })
   },[])
 
+  const verMais = () => {
+    axios.get<IPaginacao<IRestaurante>>(proximaPagina)
+    .then(resposta => {
+      console.log(resposta)
+      setRestaurantes(...restaurantes, ...resposta.data.results)
+      setProximaPagina(resposta.data.next)
+    }).catch(erro => {
+      console.log(erro)
+    })
+  }
+
   return (<section className={style.ListaRestaurantes}>
     <h1>Os restaurantes mais <em>bacanas</em>!</h1>
     {restaurantes?.map(item => <Restaurante restaurante={item} key={item.id} />)}
     {proximaPagina && 
-      <button>
+      <button onClick={verMais}>
         ver mais
       </button>}
   </section>)
